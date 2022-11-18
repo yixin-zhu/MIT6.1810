@@ -1,0 +1,24 @@
+Every bucket in this hash map is a linked list. We may have one like this.
+a - b - c
+^
+|
+entry head pointer
+
+Then thread 1 comes and is ready to call insert(). It saves the entry head pointer, which points to node a, in its context.
+But at this very time, thread 2 takes over and inserts a node "y". Note the insert() method inserts a node from head.
+
+y - a- b - c
+^
+|
+entry head pointer
+
+After that, thread 1 inserts. But it thinks the entry head pointer points at node "a".
+
+    y
+    |
+x - a- b - c
+^
+|
+entry head pointer
+
+Now the node "y" is missing.
